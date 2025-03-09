@@ -1,22 +1,27 @@
 import RPi.GPIO as GPIO
 import time
 
-LED_PIN = 18
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-GPIO.setup(LED_PIN, GPIO.OUT)
+class LedControl:
+  def __init__(self, pin, warnings = False):
+    self.pin = pin
+    self.warnings = warnings
 
-def on():
+  def setup(self):
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(self.warnings)
+    GPIO.setup(self.pin, GPIO.OUT)
+
+  def on(self):
     print("LED on")
-    GPIO.output(LED_PIN, GPIO.HIGH)
+    GPIO.output(self.pin, GPIO.HIGH)
 
-def off():
+  def off(self):
     print("LED off")
-    GPIO.output(LED_PIN, GPIO.LOW)
+    GPIO.output(self.pin, GPIO.LOW)
 
-def toggle():
-    status = GPIO.input(LED_PIN)
+  def toggle(self):
+    status = GPIO.input(self.pin)
     if status == GPIO.LOW:
-        on()
+    	self.on()
     else:
-        off()
+    	self.off()
